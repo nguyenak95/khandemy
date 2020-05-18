@@ -1,0 +1,52 @@
+body {
+  background-image: url('/backgroundLogin.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#root {
+  height: 100%;
+}
+.login__container {
+  height: 100%;
+}
+.login__form {
+  background: linear-gradient(to right, #3ca55c, #b5ac49);
+  position: relative;
+  font-size: 14px;
+  width:400px;
+  height: 100%;
+  right:0;
+  top:0;
+  h2 {
+    color:white;
+    font-size: 2rem;
+    font-family: "Dancing Script", cursive;
+  }
+  label {
+    color:white;
+  }
+  .btn__red {
+    color: white;
+    background:#dc3545;
+  }
+  .btn__red:hover {
+    color: #dc3545;
+    background: white;
+    border: 1px solid #dc3545
+  }
+  .btn__primary {
+    color: white;
+    background:#007bff;
+  }
+  .btn__primary:hover {
+    color: #007bff;
+    background:white;
+    border: 1px solid #007bff
+
+  }
+  @media screen and (min-width:500px){
+    .login__form {
+      width: 100vw;
+    }
+  }
+}
