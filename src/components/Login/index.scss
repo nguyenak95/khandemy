@@ -1,12 +1,17 @@
-body {
-  background-image: url('/backgroundLogin.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 #root {
   height: 100%;
 }
+.container {
+  width: 90%;
+}
 .login__container {
+  background-image: url('/backgroundLogin.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
 }
 .login__form {

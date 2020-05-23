@@ -7,8 +7,8 @@ function Course({ data, numberStar }) {
     setRedirect(true)
   }, [])
   return redirect ? <Redirect to={`/Chitiet/${data.maKhoaHoc}`} /> : (
-    <div className="col-12 col-md-6 col-xl-3 mt-5 ">
-      <div className="card" style={{ width: "14rem" }}>
+    <div className="col-12 col-md-6 col-lg-4 col-xl-3 mt-5 ">
+      <div className="card">
         <img
           className="card-img-top"
           src={data.hinhAnh}
@@ -16,13 +16,16 @@ function Course({ data, numberStar }) {
           alt="Card cap"
         />
         <div className="card-body">
-          <h6 className="card-title">{data.tenKhoaHoc.length > 20
-              ? data.tenKhoaHoc.slice(0,17) + "..."
+          <h6 className="card-title">{data.tenKhoaHoc.length > 50
+              ? data.tenKhoaHoc.slice(0,50) + "..."
               : data.tenKhoaHoc}</h6>
-          <p className="card-text">
+          {/* <p className="card-text">
             {data.moTa.length > 40
               ? data.moTa.slice(0,40) + "..."
               : Array(40).fill("_").join("")}
+          </p> */}
+          <p className="card-text">
+            {data.moTa}
           </p>
           <p className="card-text">
             {Array(5)
@@ -35,7 +38,7 @@ function Course({ data, numberStar }) {
               ))}
           </p>
           <div className="d-flex justify-content-between align-items-center">
-            <button className="btn btn-primary registerCourse__btn" onClick={handleXemChiTiet}>Đăng ký</button>
+            <button className="btn registerCourse__btn p-2" onClick={handleXemChiTiet}>Đăng ký</button>
             <span className="font-italic">
               Lượt xem: {data.luotXem || numberStar * 999}
             </span>

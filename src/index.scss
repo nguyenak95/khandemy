@@ -93,7 +93,7 @@ div.card:hover {
 // HomePage
 // Carousel
 .carousel__img {
-  height: calc(100vw * 400 / 950);
+  height: 80vh;
 }
 // Carousel
 // background: linear-gradient(to right, #e65245, #ff1e );
@@ -123,4 +123,9 @@ a:active {
 }
 ul {
   list-style: none;
+}
+@media screen and (max-width:450px) {
+  .carousel__img {
+    height: 300px;
+  }
 }
