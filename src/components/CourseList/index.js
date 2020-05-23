@@ -1,6 +1,6 @@
 import React from "react";
 import Course from '../Course'
-import { generateRandomStar } from '../../common'
+import { generateRandomStar } from '../Util'
 import { Skeleton } from "antd";
 const CourseList = (props) => {
   const { items } = props

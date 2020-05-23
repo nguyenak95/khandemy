@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { LAY_THONG_TIN_KHOA_HOC } from "../../common";
-import { Skeleton } from "antd";
+import { LAY_THONG_TIN_KHOA_HOC } from '../Util'
+import { Skeleton, notification } from "antd";
 
 const ChiTiet = (props) => {
   const [data, setData] = useState();
@@ -12,7 +12,10 @@ const ChiTiet = (props) => {
     if (params.maKhoaHoc) {
       fetch(`${LAY_THONG_TIN_KHOA_HOC}${params.maKhoaHoc}`)
         .then(r => r.json().then(khoaHoc => setData(khoaHoc)))
-        .catch(err => history.push("/404"));
+        .catch(err => notification.error({
+          message: err,
+          placement: 'bottomRight'
+        }) || history.push("/404"));
     } else {
       history.push("/404");
     }

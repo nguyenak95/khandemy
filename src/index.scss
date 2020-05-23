@@ -36,17 +36,16 @@ h1 {
   height: 50px;
   color: white;
 }
-//Card
+//Course
 div.card {
   .card-body {
     border-top: 0.5px solid rgb(156, 154, 154);
   }
+  height: 478px;
 }
 div.card:hover {
-  .card-body {
-    background: linear-gradient(to right, #3ca55c, #b5ac49);
-    color: white;
-  }
+  background: linear-gradient(to right, #3ca55c, #b5ac49);
+  color: white;
   .card-title {
     font-weight: bold;
   }

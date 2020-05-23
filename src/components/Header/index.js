@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
 import { Logo } from "../../assets/img";
 import { MenuOutlined } from "@ant-design/icons";
-import { LAY_DANH_MUC_KHOA_HOC } from "../../common";
+import { LAY_DANH_MUC_KHOA_HOC } from "../Util";
 import { Link, withRouter } from "react-router-dom";
 
 const Header = (props) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
-  const handleToHome = () => props.history.push("/")
+  const { history } = props
+  const handleToHome = () => history.push("/")
+  const handleRegister = () => history.push("/dangKy")
+  const handleLogin = () => history.push("/dangNhap")
 
   useEffect(() => {
     fetch(LAY_DANH_MUC_KHOA_HOC)
@@ -28,8 +31,8 @@ const Header = (props) => {
           </Menu.Item>
         ))}
       </Menu.SubMenu>
-      <button className='btn btn-primary'>Đăng nhập</button>
-      <button className='btn btn-primary'>Đăng kí</button>
+      <button className='btn btn-primary' onClick={handleLogin}>Đăng nhập</button>
+      <button className='btn btn-primary' onClick={handleRegister}>Đăng kí</button>
     </Menu>
   );
 };

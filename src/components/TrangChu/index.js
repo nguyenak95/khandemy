@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, notification } from 'antd';
 import { Img01, Img02, Img03, Img04 } from '../../assets/img';
-import { LAY_KHOA_HOC_PHAN_TRANG } from '../../common';
+import { LAY_KHOA_HOC_PHAN_TRANG } from '../Util';
 import CourseList from '../CourseList';
 import './index.scss';
 
@@ -29,7 +29,10 @@ const TrangChu = () => {
               })
             )
           )
-          .catch((err) => console.log(err));
+          .catch((err) => notification.error({
+            message: err,
+            placement: "bottomRight"
+          }));
     },
     [data.page]
   );

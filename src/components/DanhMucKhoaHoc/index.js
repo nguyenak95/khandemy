@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LAY_KHOA_HOC_THEO_DANH_MUC, generateRandomStar } from "../../common";
+import { LAY_KHOA_HOC_THEO_DANH_MUC, generateRandomStar } from "../Util";
 import Course from "../Course";
 
 const DanhMucKhoaHoc = (props) => {

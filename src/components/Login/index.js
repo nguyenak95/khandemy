@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './index.scss';
 import LoginForm from '../LoginForm';
-const LoginTemplate = (props) => {
+const Login = (props) => {
   return (
     <div className='login__container container-fluid p-0'>
-        <div className='text-center pt-2 login__form col-lg-4 col-md-5 col-sm-12'>
-          <h2> Nền tảng giáo dục trực tuyến lớn nhất Đông Lào</h2>
-          <h3> ĐĂNG KÝ </h3>
-          <LoginForm isLogin={false} className='mt-2 bg-primary'/>
-          {props.isLogin ? (
-            <div>
-              <p>Hoặc đăng ký với: </p>
-            </div>
-          ) : null}
-          </div>
-        </div>
+      <div className='text-center pt-2 login__form col-lg-4 col-md-5 col-sm-12'>
+        <h2> Nền tảng giáo dục trực tuyến lớn nhất Đông Lào </h2>
+        <h3> ĐĂNG NHẬP </h3>
+        <LoginForm isLogin={true} className='mt-2 bg-primary' history={props.history}/>
+      </div>
+    </div>
   );
 };
 
-export default LoginTemplate;
+export default Login;
