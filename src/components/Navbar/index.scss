@@ -1,0 +1,13 @@
+#navbar {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  background: linear-gradient(to right, #3ca55c, #b5ac49);
+  color: white;
+  .btn:focus {
+    box-shadow: none;
+  }
+  .form-control {
+    transition: none;
+  }
+}

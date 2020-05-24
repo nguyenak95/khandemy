@@ -1,4 +1,5 @@
-#google, #appstore {
+#google,
+#appstore {
   border-radius: 5px;
   margin-top: 5px;
   height: 50px;
@@ -22,4 +23,27 @@ ul {
 }
 .center__vertical {
   padding-top: 20px;
+}
+//Footer
+footer {
+  a:link {
+    text-decoration: none;
+    color: white;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: green;
+  }
+  a:visited {
+    text-decoration: none;
+    color: white;
+  }
+
+  a:active {
+    text-decoration: none;
+  }
+  button {
+    width: 41px;
+  }
 }

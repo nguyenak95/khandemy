@@ -15,12 +15,13 @@ p.notfound {
   text-align: center;
   margin-top: 50px;
 }
+#course__category {
+  padding-top: 100px;
+}
 .font__dancing {
   font-family: "Dancing Script", cursive;
 }
-.bg__linear {
-  background: linear-gradient(to right, #3ca55c, #b5ac49);
-}
+
 h1 {
   font-size: 4rem;
   background: linear-gradient(to right, #3ca55c, #b5ac49);
@@ -28,14 +29,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.header__menu {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  background: linear-gradient(to right, #3ca55c, #b5ac49);
-  height: 50px;
-  color: white;
-}
+
 //Course
 div.card {
   .card-body {
@@ -102,24 +96,7 @@ div.card:hover {
   }
 
 }
-//Footer
-a:link {
-  text-decoration: none;
-  color:white
-}
 
-a:hover {
-  text-decoration: none;
-  color:green
-}
-a:visited {
-  text-decoration: none;
-  color:white
-}
-
-a:active {
-  text-decoration: none;
-}
 ul {
   list-style: none;
 }

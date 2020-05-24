@@ -1,12 +1,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const HomeLayout = (props) => {
   return (
     <>
-      <Header />
+      <Navbar />
       {props.children}
       <Footer />
     </>

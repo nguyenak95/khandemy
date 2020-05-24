@@ -23,7 +23,7 @@ function Course({ data, numberStar }) {
               ? data.tenKhoaHoc.slice(0, 50) + '...'
               : data.tenKhoaHoc}
           </h6>
-          <p className='card-text'>{data.moTa}</p>
+          <p className='card-text'>{data.moTa.slice(0,90)+'...'}</p>
         </div>
         <div className='card-footer'>
           <p className='card-text'>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LAY_KHOA_HOC_THEO_DANH_MUC, generateRandomStar } from "../Util";
 import Course from "../Course";
+import CourseList from "../CourseList";
 
 const DanhMucKhoaHoc = (props) => {
   const [state, setState] = useState([]);
@@ -22,16 +23,10 @@ const DanhMucKhoaHoc = (props) => {
     }
   }, [props]);
   return state[0] ? (
-    <>
-      <h1 className='text-center font__dancing mt-5'>{state[0].danhMucKhoaHoc.tenDanhMucKhoaHoc.toUpperCase()}</h1>
-      <div className='container'>
-        <div className='row'>
-        {state.map((item, idx) => (
-          <Course data={item} key={idx} numberStar={generateRandomStar()}/>
-          ))}
-        </div>
-      </div>
-    </>
+    <div id='course__category'>
+      <h1 className='text-center font__dancing'>{state[0].danhMucKhoaHoc.tenDanhMucKhoaHoc.toUpperCase()}</h1>
+      <CourseList items={state} />
+    </div>
   ) : null;
 };
 

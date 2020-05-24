@@ -1,11 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 const AdminLayout = (props) => {
   return (
     <>
-      <Header />
+      <Navbar />
       {props.children}
     </>
   );

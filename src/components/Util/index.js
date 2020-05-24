@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { notification } from 'antd';
+
+
 export const LAY_DANH_MUC_KHOA_HOC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhMucKhoaHoc';
 export const LAY_KHOA_HOC_THEO_DANH_MUC =
@@ -19,8 +21,12 @@ export const generateRandomStar = () => Math.ceil(Math.random() * 5);
 export const callLoginAPI = (input) =>
   axios
     .post(DANG_NHAP, input)
-    .then((result) => {
-      localStorage.setItem('tokenKhandemy', result.data.accessToken);
+    .then(({ data }) => {
+      const token = {
+        taiKhoan: data.taiKhoan,
+        token: data.accessToken,
+      };
+      localStorage.setItem('tokenKhandemy', JSON.stringify(token));
     })
     .catch((err) =>
       notification.error({
@@ -30,15 +36,20 @@ export const callLoginAPI = (input) =>
 export const callRegisterAPI = (input) =>
   axios
     .post(DANG_KY, input)
-    .then((result) => {
-      console.log(result.data)
-      localStorage.setItem('tokenKhandemy', result.data.accessToken);
+    .then(({ data }) => {
+      const token = {
+        taiKhoan: data.taiKhoan,
+        token: data.accessToken,
+      };
+      localStorage.setItem('tokenKhandemy', JSON.stringify(token));
     })
     .catch((err) =>
       notification.error({
         message: err.message,
       })
     );
+export const getCourseCategoryAPI = () => axios.get(LAY_DANH_MUC_KHOA_HOC);
+
 
 export const rules = {
   username: [
