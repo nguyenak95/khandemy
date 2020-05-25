@@ -5,7 +5,7 @@ import { getCourseCategoryAPI } from '../Util';
 import { Link, withRouter } from 'react-router-dom';
 import DropDown from '../MenuDropDown';
 import SearchBar from '../SearchBar';
-import './index.scss'
+import './index.scss';
 
 const Navbar = (props) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
@@ -16,7 +16,9 @@ const Navbar = (props) => {
   useEffect(() => {
     getCourseCategoryAPI()
       .then((rs) => setDanhMucKhoaHoc(rs.data))
-      .catch((err) => notification.error({ message: err.message }));
+      .catch((err) =>
+        notification.error({ message: err.message, placement: 'bottomRight' })
+      );
   }, []);
   return (
     <nav className='navbar navbar-expand-lg' id='navbar'>
@@ -34,7 +36,7 @@ const Navbar = (props) => {
       <div className='collapse navbar-collapse' id='navbarSupportedContent'>
         <DropDown danhMucKhoaHoc={danhMucKhoaHoc} />
         <SearchBar />
-        <div className='d-flex justify-content-between ml-auto'>
+        <div className='mt-1'>
           <Link to='/dangNhap' className='mr-1'>
             <button className='btn btn-primary nav-item' onClick={handleLogin}>
               Đăng nhập

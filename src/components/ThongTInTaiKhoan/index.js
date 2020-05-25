@@ -1,16 +1,19 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { notification, Tabs } from 'antd';
 import { GlobalContext } from '../../global';
 import axios from 'axios';
+import './index.scss'
 
 const { TabPane } = Tabs;
 const ThongTinTaiKhoan = (props) => {
   const { isAuth } = useContext(GlobalContext);
+  const [user, setUser] = useState(null)
   const { history } = props;
   useEffect(() => {
     if (!isAuth) {
       notification.error({
         message: 'Vui lòng đăng nhập để tiếp tục',
+        placement: 'bottomRight'
       });
       history.push('/dangNhap');
     } else {
@@ -20,26 +23,28 @@ const ThongTinTaiKhoan = (props) => {
           'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan',
           { taiKhoan: localStore.taiKhoan },
           {
-            headers: { Authorization: `Bearer ` + localStore.token },
+            headers: { Authorization: `Bearer ` + localStore.accessToken },
           }
         )
-        .then((r) => console.log(r))
-        .catch((e) => console.log(e));
+        .then((r) => setUser(r.data))
+        .catch((e) => notification.error({
+          message: e.message,
+          placement: 'bottomRight'
+        }));
     }
   }, []);
-  return (
-    <Tabs defaultActiveKey='1' className='pt-5'>
-      <TabPane tab='Tab 1' key='1'>
+  return user ? (
+    <div id='user__profile'>
+    <Tabs defaultActiveKey='1' size='large' className='user__tab'>
+      <TabPane tab='Thoong' key='1'>
         Content of Tab Pane 1
       </TabPane>
       <TabPane tab='Tab 2' key='2'>
         Content of Tab Pane 2
       </TabPane>
-      <TabPane tab='Tab 3' key='3'>
-        Content of Tab Pane 3
-      </TabPane>
     </Tabs>
-  );
+    </div>
+  ) : null
 };
 
 export default ThongTinTaiKhoan;

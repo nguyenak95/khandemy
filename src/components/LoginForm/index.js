@@ -1,31 +1,59 @@
-import React from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { Form, Input, notification } from 'antd';
-import { rules, callLoginAPI, callRegisterAPI } from '../Util';
+import { rules, DANG_NHAP, DANG_KY } from '../Util';
+import { GlobalContext } from '../../global';
+import axios from 'axios';
 const LoginForm = (props) => {
   const [form] = Form.useForm();
+  const { dispatch, isAuth } = useContext(GlobalContext);
   const { isLogin, history } = props;
   const route = isLogin ? 'dangKy' : 'dangNhap';
+  const callAPI = useCallback((isLogin = false, values) => {
+    const { taiKhoan, matKhau, hoTen, email, soDT } = values;
+    return isLogin
+      ? axios.post(DANG_NHAP, { taiKhoan, matKhau })
+      : axios.post(DANG_KY, {
+          taiKhoan,
+          matKhau,
+          hoTen,
+          email,
+          maNhom: 'GP08',
+          maLoaiNguoiDung: 'HV',
+          soDT: soDT || '',
+        });
+  }, []);
   const handleSubmit = () => {
     form
       .validateFields()
       .then(async (values) => {
-        const { taiKhoan, matKhau, hoTen, email, soDT } = values;
-        isLogin
-          ? callLoginAPI({ taiKhoan, matKhau })
-          : callRegisterAPI({
-              taiKhoan,
-              matKhau,
-              hoTen,
-              email,
-              maNhom: 'GP08',
-              maLoaiNguoiDung: 'HV',
-              soDT: soDT || '',
-            });
+        callAPI(isLogin, values)
+          .then((r) => {
+            const { taiKhoan, accessToken } = r.data;
+            localStorage.setItem(
+              'tokenKhandemy',
+              JSON.stringify({ taiKhoan, accessToken })
+            );
+            dispatch({ type: 'login', payload: true });
+          })
+          .catch((errorRes) =>
+            form.setFields([
+              {
+                name: 'matKhau',
+                errors: [errorRes.response.data],
+              },
+            ])
+          );
       })
-      .catch(() => notification.error({
-        message: 'Một số trường bị sai định dạng, vui lòng kiểm tra lại '
-      }))
+      .catch(() =>
+        notification.error({
+          message: 'Một số trường bị sai định dạng, vui lòng kiểm tra lại ',
+          placement: 'bottomRight',
+        })
+      );
   };
+  useEffect(() => {
+    isAuth && history.push('/thongTinTaiKhoan');
+  }, [isAuth]);
   return (
     <Form form={form} layout='vertical' labelCol={{ span: 24 }}>
       <Form.Item label='Tài khoản' name='taiKhoan'>

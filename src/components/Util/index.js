@@ -31,6 +31,7 @@ export const callLoginAPI = (input) =>
     .catch((err) =>
       notification.error({
         message: err.message,
+        placement: 'bottomRight'
       })
     );
 export const callRegisterAPI = (input) =>
@@ -46,6 +47,7 @@ export const callRegisterAPI = (input) =>
     .catch((err) =>
       notification.error({
         message: err.message,
+        placement: 'bottomRight'
       })
     );
 export const getCourseCategoryAPI = () => axios.get(LAY_DANH_MUC_KHOA_HOC);

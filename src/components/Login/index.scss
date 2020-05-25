@@ -2,9 +2,7 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
 }
-#root {
-  height: 100%;
-}
+
 .container {
   width: 90%;
 }
@@ -16,10 +14,7 @@ html {
 }
 .login__form {
   background: linear-gradient(to right, #3ca55c, #b5ac49);
-  position: relative;
   font-size: 14px;
-  width:400px;
-  height: 100%;
   right:0;
   top:0;
   h2 {
