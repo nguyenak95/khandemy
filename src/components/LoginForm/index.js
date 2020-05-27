@@ -33,7 +33,7 @@ const LoginForm = (props) => {
               'tokenKhandemy',
               JSON.stringify({ taiKhoan, accessToken })
             );
-            dispatch({ type: 'login', payload: true });
+            dispatch({ type: 'login' });
           })
           .catch((errorRes) =>
             form.setFields([

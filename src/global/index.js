@@ -6,7 +6,7 @@ export const rootReducer = (state, action) => {
     case 'login':
       return { ...state, isAuth: true };
     case 'logout':
-      return { ...state, isAuth: action.payload };
+      return { ...state, isAuth: false };
     default:
       return state;
   }

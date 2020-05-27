@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { notification } from 'antd';
 import { Logo } from '../../assets/img';
 import { getCourseCategoryAPI } from '../Util';
@@ -6,12 +6,17 @@ import { Link, withRouter } from 'react-router-dom';
 import DropDown from '../MenuDropDown';
 import SearchBar from '../SearchBar';
 import './index.scss';
+import { GlobalContext } from '../../global';
 
-const Navbar = (props) => {
+const Navbar = ({ history }) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
-  const { history } = props;
+  const { dispatch, isAuth } = useContext(GlobalContext);
   const handleRegister = () => history.push('/dangKy');
   const handleLogin = () => history.push('/dangNhap');
+  const handleLogout = () => {
+    localStorage.removeItem('tokenKhandemy');
+    dispatch({ type: 'logout' });
+  };
 
   useEffect(() => {
     getCourseCategoryAPI()
@@ -36,20 +41,33 @@ const Navbar = (props) => {
       <div className='collapse navbar-collapse' id='navbarSupportedContent'>
         <DropDown danhMucKhoaHoc={danhMucKhoaHoc} />
         <SearchBar />
-        <div className='mt-1'>
-          <Link to='/dangNhap' className='mr-1'>
-            <button className='btn btn-primary nav-item' onClick={handleLogin}>
-              Đăng nhập
-            </button>
-          </Link>
-          <Link to='/dangKy'>
+
+        {isAuth ? (
+          <Link to='/dangNhap' className='mt-1'>
             <button
-              className='btn btn-danger nav-item'
-              onClick={handleRegister}>
-              Đăng ký
+              className='btn btn-secondary nav-item'
+              onClick={handleLogout}>
+              Đăng xuất
             </button>
           </Link>
-        </div>
+        ) : (
+          <div className='mt-1'>
+            <Link to='/dangNhap' className='mr-1'>
+              <button
+                className='btn btn-primary nav-item'
+                onClick={handleLogin}>
+                Đăng nhập
+              </button>
+            </Link>
+            <Link to='/dangKy'>
+              <button
+                className='btn btn-danger nav-item'
+                onClick={handleRegister}>
+                Đăng ký
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );
