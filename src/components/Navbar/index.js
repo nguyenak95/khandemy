@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { notification } from 'antd';
 import { Logo } from '../../assets/img';
-import { getCourseCategoryAPI } from '../Util';
+import { LAY_DANH_MUC_KHOA_HOC } from '../Util';
 import { Link, withRouter } from 'react-router-dom';
 import DropDown from '../MenuDropDown';
 import SearchBar from '../SearchBar';
 import './index.scss';
 import { GlobalContext } from '../../global';
+import axios from 'axios';
 
 const Navbar = ({ history }) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
@@ -19,7 +20,7 @@ const Navbar = ({ history }) => {
   };
 
   useEffect(() => {
-    getCourseCategoryAPI()
+    axios.get(LAY_DANH_MUC_KHOA_HOC)
       .then((rs) => setDanhMucKhoaHoc(rs.data))
       .catch((err) =>
         notification.error({ message: err.message, placement: 'bottomRight' })

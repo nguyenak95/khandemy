@@ -1,0 +1,14 @@
+#user__profile {
+  .trigger {
+    position: absolute;
+    left:0;
+    top:0;
+    width:100px;
+  }
+  .ant-layout-sider, .ant-menu  {
+    background: linear-gradient(to bottom, #3ca55c, #b5ac49);
+  }
+  .ant-menu {
+    height: 100%;
+  }
+}
