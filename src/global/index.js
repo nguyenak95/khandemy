@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const GlobalContext = React.createContext(null);
+
 export const rootReducer = (state, action) => {
   switch (action.type) {
     case 'login':
@@ -8,6 +9,6 @@ export const rootReducer = (state, action) => {
     case 'logout':
       return { ...state, isAuth: false };
     default:
-      return state;
+      return new Error('Something wrong, please try again');
   }
 };

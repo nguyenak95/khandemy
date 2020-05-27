@@ -11,8 +11,9 @@ import NotFound from './components/NotFound'
 import ChiTiet from './components/ChiTiet';
 import Login from './components/Login';
 import Register from './components/Register';
+import EditUserForm from './components/EditUserForm';
+import EditCourse from './components/EditCourse';
 // import ThongTinTaiKhoan from './components/ThongTInTaiKhoan';
-import {UserProfile} from "./pages/UserPage";
 import { rootReducer, GlobalContext } from "./global";
 function App() {
   const [globalState, dispatch] = useReducer(rootReducer, {
@@ -24,7 +25,8 @@ function App() {
         <Switch>
           <HomeTemplate exact path='/DanhMucKhoaHoc/:maDanhMuc?/:maNhom?' Component={DanhMucKhoaHoc} />
           <HomeTemplate exact path='/Chitiet/:maKhoaHoc' Component={ChiTiet} />
-          <UserTemplate exact path='/thongTinTaiKhoan' Component={UserProfile} />
+          <UserTemplate exact path='/thongTinTaiKhoan/thongTinCaNhan' Component={EditUserForm} />
+          <UserTemplate exact path='/thongTinTaiKhoan/khoaHocCuaToi' Component={EditCourse} />
           <LoginTemplate exact path='/dangNhap' Component={Login} />
           <LoginTemplate exact path='/dangKy' Component={Register} />
           <HomeTemplate exact path='/' Component={TrangChu} />

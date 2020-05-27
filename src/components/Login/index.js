@@ -1,9 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import './index.scss';
 import LoginForm from '../LoginForm';
-import DropDown from '../MenuDropDown';
-import axios from 'axios';
-import { DANG_NHAP } from '../Util';
 
 const Login = (props) => {
   return (
