@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, notification } from 'antd';
 import {
   PieChartOutlined,
   UserOutlined,
@@ -10,6 +10,8 @@ import './index.scss';
 import EditCourse from '../EditCourse';
 import { GlobalContext } from '../../global';
 import EditUserForm from '../EditUserForm';
+import axios from 'axios';
+import { LAY_THONG_TIN_CA_NHAN } from '../Util';
 const { Content, Sider } = Layout;
 
 const UserProfile = ({ history }) => {
@@ -17,9 +19,8 @@ const UserProfile = ({ history }) => {
     isCollapsed: false,
     isEditProfile: true,
   });
-  const { dispatch, isAuth } = useContext(GlobalContext);
+  const { dispatch, isAuth, userData } = useContext(GlobalContext);
   const { isCollapsed, isEditProfile } = pageStatus;
-
   const toggleCollapsed = () =>
     setPageStatus((s) => ({ ...s, isCollapsed: !s.isCollapsed }));
 
@@ -29,14 +30,36 @@ const UserProfile = ({ history }) => {
   const toEditCourse = () =>
     isEditProfile && setPageStatus((s) => ({ ...s, isEditProfile: false }));
 
-  const handleLogout = () => {
-    localStorage.removeItem('tokenKhandemy') || dispatch({ type: 'logout' });
-  };
+  const handleLogout = () => dispatch({ type: 'logout' });
 
   useEffect(() => {
-    !isAuth && history.push('dangNhap');
-  }, [isAuth]);
-  return (
+    if (isAuth) {
+      const store = localStorage.getItem('tokenKhandemy');
+      const { taiKhoan, accessToken } = JSON.parse(store);
+      axios
+        .post(
+          LAY_THONG_TIN_CA_NHAN,
+          { taiKhoan },
+          {
+            headers: {
+              Authorization: 'Bearer ' + accessToken,
+            },
+          }
+        )
+        .then((r) => {
+          dispatch({ type: 'setUserData', payload: r.data });
+        })
+        .catch(() =>
+          notification.error({
+            message: 'Token hết hạn, vui lòng đăng nhập lại',
+          })
+        );
+    } else {
+      history.push('/dangNhap');
+    }
+  }, [isAuth, userData]);
+
+  return isAuth ? (
     <Layout id='user__profile' style={{ minHeight: '100vh' }}>
       <Sider
         breakpoint='md'
@@ -74,11 +97,15 @@ const UserProfile = ({ history }) => {
         <div
           className='site-layout-background'
           style={{ padding: 24, minHeight: 360 }}>
-          {isEditProfile ? <EditUserForm isAuth={isAuth} /> : <EditCourse />}
+          {isEditProfile ? (
+            <EditUserForm isAuth={isAuth} userData={userData} />
+          ) : (
+            <EditCourse dispatch={dispatch} userData={userData} />
+          )}
         </div>
       </Content>
     </Layout>
-  );
+  ) : null;
 };
 
 export default UserProfile;

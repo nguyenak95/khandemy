@@ -27,13 +27,8 @@ const LoginForm = (props) => {
       .validateFields()
       .then(async (values) => {
         callAPI(isLogin, values)
-          .then((r) => {
-            const { taiKhoan, accessToken } = r.data;
-            localStorage.setItem(
-              'tokenKhandemy',
-              JSON.stringify({ taiKhoan, accessToken })
-            );
-            dispatch({ type: 'login' });
+          .then(({ data: { taiKhoan, accessToken } }) => {
+            dispatch({ type: 'login', payload: { taiKhoan, accessToken } });
           })
           .catch((errorRes) =>
             form.setFields([

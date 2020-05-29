@@ -9,15 +9,15 @@ import {
   notification,
   Spin,
 } from 'antd';
-import { useHistory } from 'react-router-dom';
-import { LAY_THONG_TIN_CA_NHAN, CAP_NHAT_THONG_TIN } from '../Util';
+import { CAP_NHAT_THONG_TIN } from '../Util';
 import axios from 'axios';
 
-const EditUserForm = ({ isAuth }) => {
+const EditUserForm = ({ userData }) => {
   const [editable, setEditable] = useState(false);
-  const [userData, setUserData] = useState({});
   const [form] = Form.useForm();
-  const history = useHistory();
+  useEffect(() => {
+    form.setFieldsValue(userData);
+  });
   const handleEdit = useCallback(() => setEditable(true), []);
   const handleChangePass = (mode) => {
     const nhapLaiInput = document.querySelector('#editUser_nhapLai');
@@ -53,7 +53,7 @@ const EditUserForm = ({ isAuth }) => {
               },
               {
                 headers: {
-                  Authorization: 'Bearer' + accessToken,
+                  Authorization: 'Bearer ' + accessToken,
                 },
               }
             )
@@ -81,43 +81,8 @@ const EditUserForm = ({ isAuth }) => {
         })
       );
   };
-  useEffect(() => {
-    if (isAuth) {
-      const store = localStorage.getItem('tokenKhandemy');
-      const { taiKhoan, accessToken } = JSON.parse(store);
-      axios
-        .post(
-          LAY_THONG_TIN_CA_NHAN,
-          { taiKhoan },
-          {
-            headers: {
-              Authorization: 'Bearer ' + accessToken,
-            },
-          }
-        )
-        .then((response) => {
-          setUserData(response.data);
-          const {
-            chiTietKhoaHocGhiDanh,
-            maLoaiNguoiDung,
-            maNhom,
-            ...initialValues
-          } = response.data;
-          form.setFieldsValue(initialValues);
-        })
-        .catch(
-          () =>
-            localStorage.removeItem('tokenKhandemy') ||
-            notification.error({
-              message: 'Token hết hạn, vui lòng đăng nhập lại',
-            }) ||
-            history.push('/dangNhap')
-        );
-    } else {
-      history.push('/dangNhap');
-    }
-  }, [isAuth]);
-  return userData.maNhom ? (
+
+  return userData ? (
     <>
       <PageHeader
         title='Thông tin cá nhân'
@@ -162,7 +127,7 @@ const EditUserForm = ({ isAuth }) => {
       </Form>
     </>
   ) : (
-    <Spin />
+    <Spin size='large' />
   );
 };
 

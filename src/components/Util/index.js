@@ -16,6 +16,9 @@ const LAY_THONG_TIN_CA_NHAN =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan';
 const CAP_NHAT_THONG_TIN =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung';
+const HUY_DANG_KY_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/HuyGhiDanh';
+
 const generateRandomStar = () => Math.ceil(Math.random() * 5);
 
 export const rules = {
@@ -50,5 +53,6 @@ export {
   DANG_KY,
   LAY_THONG_TIN_CA_NHAN,
   CAP_NHAT_THONG_TIN,
+  HUY_DANG_KY_KHOA_HOC,
   generateRandomStar,
 };

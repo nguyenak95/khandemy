@@ -14,7 +14,8 @@ import Register from './components/Register';
 import { rootReducer, GlobalContext } from "./global";
 function App() {
   const [globalState, dispatch] = useReducer(rootReducer, {
-    isAuth: !!localStorage.getItem('tokenKhandemy')
+    isAuth: !!localStorage.getItem('tokenKhandemy'),
+    userData: null
   })
   return (
     <GlobalContext.Provider value={{...globalState, dispatch}}>

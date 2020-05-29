@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { notification } from 'antd';
 import { Logo } from '../../assets/img';
 import { LAY_DANH_MUC_KHOA_HOC } from '../Util';
@@ -12,15 +12,15 @@ import axios from 'axios';
 const Navbar = ({ history }) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   const { dispatch, isAuth } = useContext(GlobalContext);
-  const handleRegister = () => history.push('/dangKy');
-  const handleLogin = () => history.push('/dangNhap');
-  const handleLogout = () => {
-    localStorage.removeItem('tokenKhandemy');
-    dispatch({ type: 'logout' });
-  };
-
+  const callback = useMemo(() => ({
+    handleRegister: () => history.push('/dangKy'),
+    handleLogin: () => history.push('/dangNhap'),
+    handleLogout: () => dispatch({ type: 'logout' })
+  }), [history, dispatch]);
+  const { handleRegister, handleLogin, handleLogout } = callback
   useEffect(() => {
-    axios.get(LAY_DANH_MUC_KHOA_HOC)
+    axios
+      .get(LAY_DANH_MUC_KHOA_HOC)
       .then((rs) => setDanhMucKhoaHoc(rs.data))
       .catch((err) =>
         notification.error({ message: err.message, placement: 'bottomRight' })
