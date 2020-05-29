@@ -12,6 +12,7 @@ import { GlobalContext } from '../../global';
 import EditUserForm from '../EditUserForm';
 import axios from 'axios';
 import { LAY_THONG_TIN_CA_NHAN } from '../Util';
+import AdminNavbar from '../AdminNavbar';
 const { Content, Sider } = Layout;
 
 const UserProfile = ({ history }) => {

@@ -1,11 +1,17 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 body {
   box-sizing: border-box;
   font-size: 16px;
 }
-
+#admin__pannel {
+  .ant-menu,
+  .ant-layout-sider-children {
+    background: lightblue;
+  }
+}
 .linearColor {
   background: linear-gradient(to right, #3ca55c, #b5ac49);
 }
@@ -23,7 +29,7 @@ p.notfound {
   padding-top: 100px;
 }
 .font__dancing {
-  font-family: "Dancing Script", cursive;
+  font-family: 'Dancing Script', cursive;
 }
 
 h1 {
@@ -76,15 +82,15 @@ div.card:hover {
 }
 .page__btn:hover {
   background: #a79e43;
-  color:white
+  color: white;
 }
 .slt__page__btn {
   background: #a79e43;
-  color:white
+  color: white;
 }
 .nav__page__btn {
   background: #a79e43;
-  color:white
+  color: white;
 }
 
 // HomePage
@@ -96,15 +102,14 @@ div.card:hover {
 // background: linear-gradient(to right, #e65245, #ff1e );
 @media only screen and (max-width: 600px) {
   h1 {
-    font-size: 3rem
+    font-size: 3rem;
   }
-
 }
 
 ul {
   list-style: none;
 }
-@media screen and (max-width:450px) {
+@media screen and (max-width: 450px) {
   .carousel__img {
     height: 300px;
   }

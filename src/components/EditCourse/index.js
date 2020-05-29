@@ -30,7 +30,7 @@ const EditCourse = ({ userData, dispatch }) => {
         extra={[<Input.Search />]}
       />
       {chiTietKhoaHocGhiDanh.length ? (
-        <CourseWideList items={chiTietKhoaHocGhiDanh} />
+        <CourseWideList items={chiTietKhoaHocGhiDanh} handleAbortCourse={handleAbortCourse}/>
       ) : (
         <div className='d-flex justify-content-center p-5'>
           <p>Bạn chưa đăng kí khóa học nào</p>

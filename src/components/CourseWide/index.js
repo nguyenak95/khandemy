@@ -14,11 +14,9 @@ const CourseWide = ({ data, handleAbortCourse }) => {
       <div>
         <div className='card-body'>
           <h6 className='card-title'>
-            {data.tenKhoaHoc.length > 50
-              ? data.tenKhoaHoc.slice(0, 50) + '...'
-              : data.tenKhoaHoc}
+            {data.tenKhoaHoc}
           </h6>
-          <p className='card-text'>{data.moTa.slice(0, 90) + '...'}</p>
+          <p className='card-text'>{data.moTa}</p>
         </div>
         <div className='card-footer'>
           <p className='card-text'>
