@@ -1,10 +1,11 @@
 import React from 'react';
-import LoginForm from '../LoginForm';
-
-const Register = (props) => {
+import LoginForm from '../components/LoginForm';
+const RegisterPage = (props) => {
   return (
     <div className='login__container'>
-      <div className='text-center p-5 d-flex flex-column login__form col-lg-4 col-md-5 col-sm-12'>
+      <div
+        style={{ minHeight: '100vh' }}
+        className='text-center d-flex flex-column login__form col-lg-4 col-md-5 col-sm-12'>
         <h2> Nền tảng giáo dục trực tuyến lớn nhất Đông Lào</h2>
         <h3> ĐĂNG KÝ </h3>
         <div>
@@ -15,4 +16,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default RegisterPage;

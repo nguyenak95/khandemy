@@ -4,35 +4,26 @@ import './index.scss';
 const CourseWide = ({ data, handleAbortCourse }) => {
   const numberStar = generateRandomStar();
   return (
-    <div className='card-wide col-11'>
-      <img
-        className='card-img-top col-3'
-        src={data.hinhAnh}
-        height={180}
-        alt='Card cap'
-      />
-      <div>
+    <div className='card-wide'>
+      <div style={{ flex: 1 }}>
+        <img
+          className='card-img-top'
+          src={data.hinhAnh}
+          height='100%'
+          alt='Card cap'
+        />
+      </div>
+      <div
+        style={{ flex: 3 }}
+        className='d-flex flex-column justify-content-between'>
         <div className='card-body'>
-          <h6 className='card-title'>
-            {data.tenKhoaHoc}
-          </h6>
+          <h5 className='card-title'>{data.tenKhoaHoc}</h5>
           <p className='card-text'>{data.moTa}</p>
         </div>
-        <div className='card-footer'>
-          <p className='card-text'>
-            {Array(5)
-              .fill(0)
-              .map((_, i) => (
-                <i
-                  key={i}
-                  className={`fa fa-star ${
-                    numberStar - i > 0 ? 'yellow' : ''
-                  }`}></i>
-              ))}
-          </p>
+        <div className='card-footer pb-1'>
           <div className='d-flex justify-content-between align-items-center'>
             <button
-              className='btn registerCourse__btn p-2'
+              className='btn btn-danger btn-sm'
               onClick={() => handleAbortCourse(data.maKhoaHoc)}>
               Hủy
             </button>

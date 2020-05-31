@@ -1,22 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { LAY_THONG_TIN_KHOA_HOC, generateRandomStar } from '../Util';
-import { Skeleton, notification } from 'antd';
+import React, { useEffect, useState, useContext } from 'react';
+import {
+  LAY_THONG_TIN_KHOA_HOC,
+  DANG_KY_KHOA_HOC,
+  LAY_THONG_TIN_CA_NHAN,
+  generateRandomStar,
+  errorBar,
+  successBar,
+} from '../Util';
+import { Skeleton, notification, Modal } from 'antd';
 import './index.scss';
 import { loremIpsum } from 'lorem-ipsum';
 import axios from 'axios';
+import { GlobalContext } from '../../global';
 
-const ChiTiet = (props) => {
+const ChiTiet = ({ history, match: { params } }) => {
   const [data, setData] = useState();
+  const { dispatch, isAuth, userData, reqOptions } = useContext(GlobalContext);
   const numberStar = generateRandomStar();
+  const layThongTinCaNhan = () => {
+    const { taiKhoan } = JSON.parse(
+      localStorage.getItem('tokenKhandemy') || '{}'
+    );
+
+    axios
+      .post(LAY_THONG_TIN_CA_NHAN, { taiKhoan }, reqOptions)
+      .then(({ data }) => {
+        dispatch({ type: 'setUserData', payload: data });
+      })
+      .catch(
+        () =>
+          notification.error({
+            message: 'Token hết hạn, vui lòng đăng nhập lại',
+          }) || dispatch({ type: 'logout' })
+      );
+  };
+  const registerCourse = () => {
+    if (!isAuth) {
+      Modal.confirm({
+        maskClosable: true,
+        title: 'Xác nhận',
+        content:
+          'Vui lòng đăng nhập để ghi danh khóa học. Bạn có muốn chuyển về trang đăng nhập ?',
+        okText: 'Đến trang đăng nhập',
+        cancelText: 'Hủy',
+        onOk: () => history.push('/dangNhap'),
+      });
+    } else {
+      axios
+        .post(
+          DANG_KY_KHOA_HOC,
+          {
+            taiKhoan: userData.taiKhoan,
+            maKhoaHoc: params.maKhoaHoc,
+          },
+          reqOptions
+        )
+        .then(({ data }) => successBar(data) || layThongTinCaNhan())
+        .catch(({ response }) => errorBar(response.data));
+    }
+  };
   useEffect(() => {
-    const {
-      match: { params },
-      history,
-    } = props;
     if (params.maKhoaHoc) {
       axios
         .get(`${LAY_THONG_TIN_KHOA_HOC}${params.maKhoaHoc}`)
-        .then((r) => console.log(r.data) || setData(r.data))
+        .then((r) => setData(r.data))
         .catch(
           (err) =>
             notification.error({
@@ -49,7 +96,9 @@ const ChiTiet = (props) => {
                   }`}></i>
               ))}
           </p>
-          <button className='btn btn-outline-light'>Đăng ký</button>
+          <button className='btn btn-outline-light' onClick={registerCourse}>
+            Đăng ký
+          </button>
         </div>
       </div>
       <div id='course__info' className='container pt-5 pb-5'>

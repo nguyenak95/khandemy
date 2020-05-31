@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useMemo } from 'react';
-import { notification } from 'antd';
-import { Logo } from '../../assets/img';
-import { LAY_DANH_MUC_KHOA_HOC } from '../Util';
+import { notification, Modal } from 'antd';
+import { Logo, Avatar } from '../../assets/img';
+import { LAY_DANH_MUC_KHOA_HOC, LAY_THONG_TIN_CA_NHAN } from '../Util';
 import { Link, withRouter } from 'react-router-dom';
 import DropDown from '../MenuDropDown';
 import SearchBar from '../SearchBar';
@@ -11,20 +11,55 @@ import axios from 'axios';
 
 const Navbar = ({ history }) => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
-  const { dispatch, isAuth } = useContext(GlobalContext);
-  const callback = useMemo(() => ({
-    handleRegister: () => history.push('/dangKy'),
-    handleLogin: () => history.push('/dangNhap'),
-    handleLogout: () => dispatch({ type: 'logout' })
-  }), [history, dispatch]);
-  const { handleRegister, handleLogin, handleLogout } = callback
+  const { dispatch, isAuth, userData } = useContext(GlobalContext);
+  const callback = useMemo(
+    () => ({
+      handleRegister: () => history.push('/dangKy'),
+      handleLogin: () => history.push('/dangNhap'),
+      handleLogout: () => dispatch({ type: 'logout' }),
+    }),
+    [history, dispatch]
+  );
+  const { handleRegister, handleLogin, handleLogout } = callback;
   useEffect(() => {
-    axios
-      .get(LAY_DANH_MUC_KHOA_HOC)
-      .then((rs) => setDanhMucKhoaHoc(rs.data))
-      .catch((err) =>
-        notification.error({ message: err.message, placement: 'bottomRight' })
-      );
+    const store = localStorage.getItem('tokenKhandemy');
+    const { taiKhoan, accessToken } = JSON.parse(store || '{}');
+    Promise.all([
+      axios
+        .get(LAY_DANH_MUC_KHOA_HOC)
+        .then((rs) => setDanhMucKhoaHoc(rs.data))
+        .catch((err) =>
+          notification.error({ message: err.message, placement: 'bottomRight' })
+        ),
+      isAuth && !userData
+        ? axios
+            .post(
+              LAY_THONG_TIN_CA_NHAN,
+              { taiKhoan },
+              {
+                headers: {
+                  Authorization: 'Bearer ' + accessToken,
+                },
+              }
+            )
+            .then(({ data }) =>
+              dispatch({ type: 'setUserData', payload: data })
+            )
+            .catch(
+              () =>
+                notification.error({
+                  message: 'Token hết hạn, vui lòng đăng nhập lại',
+                }) ||
+                Modal.confirm({
+                  maskClosable: true,
+                  title: 'Xác nhận',
+                  content: 'Bạn có muốn chuyển về trang đăng nhập ?',
+                  okText: 'Đến trang đăng nhập',
+                  cancelText: 'Hủy',
+                })
+            )
+        : null,
+    ]);
   }, []);
   return (
     <nav className='navbar navbar-expand-lg' id='navbar'>
@@ -39,18 +74,35 @@ const Navbar = ({ history }) => {
         data-target='#navbarSupportedContent'>
         <i className='fa fa-bars' />
       </button>
-      <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+      <div
+        className='collapse justify-content-between navbar-collapse'
+        id='navbarSupportedContent'>
         <DropDown danhMucKhoaHoc={danhMucKhoaHoc} />
         <SearchBar />
 
         {isAuth ? (
-          <Link to='/dangNhap' className='mt-1'>
-            <button
-              className='btn btn-secondary nav-item'
-              onClick={handleLogout}>
-              Đăng xuất
-            </button>
-          </Link>
+          <div className='dropdown'>
+            <span className='mr-1'>
+              Chào {userData && userData.hoTen.split(' ').pop()}!
+            </span>
+            <span
+              className='dropdown-toggle'
+              type='button'
+              id='dropdownMenuButton'
+              data-toggle='dropdown'>
+              <img src={Avatar} alt='Avatar' className='avatar' />
+            </span>
+            <div className='dropdown-menu'>
+              <span
+                className='dropdown-item'
+                onClick={() => history.push('/thongTinTaiKhoan')}>
+                Cập nhật thông tin
+              </span>
+              <span className='dropdown-item' onClick={handleLogout}>
+                Đăng xuất
+              </span>
+            </div>
+          </div>
         ) : (
           <div className='mt-1'>
             <Link to='/dangNhap' className='mr-1'>

@@ -1,14 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useHistory, } from 'react-router-dom';
 
 function Course({ data, numberStar }) {
-  const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
   const handleXemChiTiet = useCallback(() => {
-    setRedirect(true);
+    history.push(`/Chitiet/${data.maKhoaHoc}`);
   }, []);
-  return redirect ? (
-    <Redirect to={`/Chitiet/${data.maKhoaHoc}`} />
-  ) : (
+  return (
     <div className='col-12 col-md-6 col-lg-4 col-xl-3 mt-5 site__course'>
       <div className='card'>
         <img
@@ -23,7 +21,7 @@ function Course({ data, numberStar }) {
               ? data.tenKhoaHoc.slice(0, 50) + '...'
               : data.tenKhoaHoc}
           </h6>
-          <p className='card-text'>{data.moTa.slice(0,90)+'...'}</p>
+          <p className='card-text'>{data.moTa.slice(0, 90) + '...'}</p>
         </div>
         <div className='card-footer'>
           <p className='card-text'>

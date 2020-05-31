@@ -82,13 +82,13 @@ const EditUserForm = ({ userData }) => {
       );
   };
 
-  return userData ? (
+  return (
     <>
       <PageHeader
         title='Thông tin cá nhân'
         extra={<Button onClick={handleEdit}>Chỉnh sửa</Button>}
       />
-      <Form name='editUser' form={form} labelCol={{ span: 8 }}>
+      <Form name='editUser' form={form} labelCol={{ span: 10 }}>
         <Row gutter={8}>
           <Col sm={24} md={12}>
             <Form.Item label='Email' name='email' required>
@@ -126,8 +126,6 @@ const EditUserForm = ({ userData }) => {
         </Row>
       </Form>
     </>
-  ) : (
-    <Spin size='large' />
   );
 };
 

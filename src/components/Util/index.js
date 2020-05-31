@@ -1,61 +1,64 @@
-const LAY_DANH_MUC_KHOA_HOC =
+import { notification } from 'antd';
+
+export const LAY_DANH_MUC_KHOA_HOC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhMucKhoaHoc';
-const LAY_KHOA_HOC_THEO_DANH_MUC =
+export const LAY_KHOA_HOC_THEO_DANH_MUC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc';
-const LAY_8_KHOA_MOI =
+export const LAY_8_KHOA_MOI =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP08';
-const LAY_KHOA_HOC_PHAN_TRANG =
+export const LAY_KHOA_HOC_PHAN_TRANG =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?MaNhom=GP08&pageSize=8&';
-const LAY_THONG_TIN_KHOA_HOC =
+export const LAY_THONG_TIN_KHOA_HOC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=';
-const DANG_NHAP =
+export const DANG_NHAP =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap';
-const DANG_KY =
+export const DANG_KY =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangKy';
-const LAY_THONG_TIN_CA_NHAN =
+export const LAY_THONG_TIN_CA_NHAN =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan';
-const CAP_NHAT_THONG_TIN =
+export const CAP_NHAT_THONG_TIN =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung';
-const HUY_DANG_KY_KHOA_HOC =
+export const HUY_DANG_KY_KHOA_HOC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/HuyGhiDanh';
-const TIM_KIEM_NGUOI_DUNG =
+export const DANG_KY_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/DangKyKhoaHoc';
+export const TIM_KIEM_NGUOI_DUNG =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP08';
+export const XOA_NGUOI_DUNG =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=';
+export const POST_THEM_NGUOI_DUNG =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThemNguoiDung';
+export const PUT_SUA_NGUOI_DUNG =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung';
 
-const generateRandomStar = () => Math.ceil(Math.random() * 5);
+export const POST_KHOA_HOC_CHUA_GHI_DANH =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachKhoaHocChuaGhiDanh';
+export const POST_KHOA_HOC_DA_GHI_DANH =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet';
+export const POST_KHOA_HOC_CHO_XET_DUYET =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet';
+export const POST_ADMIN_GHI_DANH_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/GhiDanhKhoaHoc';
+export const POST_HUY_DANG_KY =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/HuyGhiDanh';
 
+export const generateRandomStar = () => Math.ceil(Math.random() * 5);
+
+export const successBar = (mess) =>
+  notification.success({
+    message: mess,
+    placement: 'bottomRight',
+  });
+export const errorBar = (mess) =>
+  notification.error({
+    message: mess,
+    placement: 'bottomRight',
+  });
 export const rules = {
-  username: [
+  required: [
     {
       required: true,
-      message: 'Vui lòng nhập tên tài khoản',
-    },
-    {
-      pattern: /^\S*$/,
-      message: 'Không được có dấu cách đầu dòng',
+      message: 'Không được để trống trường',
     },
   ],
-  password: [
-    {
-      required: true,
-      message: 'Vui lòng nhập mật khẩu',
-    },
-    {
-      min: 8,
-      message: 'Mật khẩu phải có từ 8 kí tự trở lên',
-    },
-  ],
-};
-export {
-  LAY_DANH_MUC_KHOA_HOC,
-  LAY_KHOA_HOC_THEO_DANH_MUC,
-  LAY_8_KHOA_MOI,
-  LAY_KHOA_HOC_PHAN_TRANG,
-  LAY_THONG_TIN_KHOA_HOC,
-  DANG_NHAP,
-  DANG_KY,
-  LAY_THONG_TIN_CA_NHAN,
-  CAP_NHAT_THONG_TIN,
-  HUY_DANG_KY_KHOA_HOC,
-  TIM_KIEM_NGUOI_DUNG,
-  generateRandomStar,
 };

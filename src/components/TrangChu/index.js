@@ -3,19 +3,13 @@ import { Carousel, notification } from 'antd';
 import { Img01, Img02, Img03, Img04 } from '../../assets/img';
 import { LAY_KHOA_HOC_PHAN_TRANG } from '../Util';
 import CourseList from '../CourseList';
-import './index.scss';
 
 const TrangChu = () => {
   const [data, setData] = useState({
     items: [],
-    page: 0,
-    totalCount: 0,
   });
-  const { items, totalCount } = data;
-  const handleScroll = useCallback(() => {
-    const headerY = document.getElementById('header__newest');
-    headerY.scrollIntoView();
-  }, []);
+  const { items } = data;
+
   const handleChangePage = useCallback(
     (page = 1) => {
       data.page !== page &&
@@ -55,22 +49,6 @@ const TrangChu = () => {
         Các khóa học mới nhất
       </h1>
       <CourseList items={items} />
-      <div className='container'>
-        <div className='row mb-5 mt-5 d-flex justify-content-center'>
-          {Array(Math.ceil(totalCount / 8))
-            .fill(0)
-            .map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleChangePage(idx + 1) || handleScroll()}
-                className={`btn page__btn m-1 ${
-                  idx + 1 === data.page ? 'slt__page__btn' : ''
-                }`}>
-                {idx + 1}
-              </button>
-            ))}
-        </div>
-      </div>
     </>
   );
 };

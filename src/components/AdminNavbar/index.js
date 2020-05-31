@@ -4,9 +4,8 @@ import './index.scss';
 import { MenuOutlined } from '@ant-design/icons';
 import { Button, notification } from 'antd';
 import { GlobalContext } from '../../global';
-import axios from 'axios';
 import { LAY_THONG_TIN_CA_NHAN } from '../Util';
-
+import axios from 'axios';
 const AdminNavbar = ({ toggleCollapsed, history }) => {
   const { isAuth, dispatch, userData } = useContext(GlobalContext);
   const handleLogout = () => {
@@ -27,13 +26,16 @@ const AdminNavbar = ({ toggleCollapsed, history }) => {
             },
           }
         )
-        .then((r) => {
-          dispatch({ type: 'setUserData', payload: r.data });
+        .then(({ data }) => {
+          data.maLoaiNguoiDung === 'HV'
+            ? history.push('/thongTinTaiKhoan')
+            : dispatch({ type: 'setUserData', payload: data });
         })
-        .catch(() =>
-          notification.error({
-            message: 'Token hết hạn, vui lòng đăng nhập lại',
-          })
+        .catch(
+          () =>
+            notification.error({
+              message: 'Token hết hạn, vui lòng đăng nhập lại',
+            }) || dispatch({ type: 'logout' })
         );
     } else {
       history.push('/dangNhap');
@@ -48,7 +50,7 @@ const AdminNavbar = ({ toggleCollapsed, history }) => {
         DASHBOARD
       </Button>
       <div className='dropdown'>
-        <span className='mr-5'>Chào {userData.hoTen.split(' ').pop()}!</span>
+        <span className='mr-1'>Chào {userData.hoTen.split(' ').pop()}!</span>
         <span
           className='dropdown-toggle'
           type='button'
@@ -57,7 +59,9 @@ const AdminNavbar = ({ toggleCollapsed, history }) => {
           <img src={Avatar} alt='Avatar' className='avatar' />
         </span>
         <div className='dropdown-menu'>
-          <span className='dropdown-item' onClick={() => console.log('clcik')}>
+          <span
+            className='dropdown-item'
+            onClick={() => history.push('/thongTinTaiKhoan')}>
             Cập nhật thông tin
           </span>
           <span className='dropdown-item' onClick={handleLogout}>

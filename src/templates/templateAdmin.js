@@ -8,21 +8,30 @@ const { Sider, Content } = Layout;
 const AdminLayout = ({ history, children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const toggleCollapsed = useCallback(() => setIsCollapsed((s) => !s), []);
-  const toManageUser = useCallback(() => history.push('admin/quanLyNguoiDung'), []);
-  const toManageCourse = useCallback(() => history.push('admin/quanLyKhoaHoc'), []);
+  const onBreakpointToggle = useCallback(() => setIsCollapsed(true), []);
+  const toManageUser = useCallback(
+    () => history.push('admin/quanLyNguoiDung'),
+    []
+  );
+  const toManageCourse = useCallback(
+    () => history.push('admin/quanLyKhoaHoc'),
+    []
+  );
 
   return (
     <>
       <AdminNavbar history={history} toggleCollapsed={toggleCollapsed} />
-      <Layout id='admin__pannel' style={{ minHeight: '100vh' }}>
+      <Layout
+        id='admin__pannel'
+        style={{ minHeight: '100vh', paddingTop: '55px' }}>
         <Sider
           theme='light'
           breakpoint='md'
-          collapsedWidth='80'
+          collapsedWidth='0'
           collapsible
           trigger={null}
           collapsed={isCollapsed}
-          onBreakpoint={toggleCollapsed}>
+          onBreakpoint={onBreakpointToggle}>
           <Menu defaultSelectedKeys={['1']} theme='light' mode='inline'>
             <Menu.Item
               key='1'

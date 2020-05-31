@@ -7,18 +7,27 @@ import { LoginTemplate } from './templates/templateLogin';
 import { UserTemplate } from './templates/templateUser';
 import { AdminTemplate } from './templates/templateAdmin';
 import DanhMucKhoaHoc from './components/DanhMucKhoaHoc';
-import TrangChu from './components/TrangChu';
 import NotFound from './components/NotFound';
 import ChiTiet from './components/ChiTiet';
-import Login from './components/Login';
-import Register from './components/Register';
 import { rootReducer, GlobalContext } from './global';
 import ManageUserPage from './pages/ManageUserPage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 function App() {
-  const [globalState, dispatch] = useReducer(rootReducer, {
-    isAuth: !!localStorage.getItem('tokenKhandemy'),
-    userData: null,
+  const [globalState, dispatch] = useReducer(rootReducer, {}, () => {
+    const store = localStorage.getItem('tokenKhandemy');
+    const { accessToken } = JSON.parse(store || '{}');
+    return {
+      isAuth: !!store,
+      userData: null,
+      reqOptions: {
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : null,
+        },
+      },
+    };
   });
   return (
     <GlobalContext.Provider value={{ ...globalState, dispatch }}>
@@ -31,15 +40,15 @@ function App() {
           />
           <HomeTemplate exact path='/Chitiet/:maKhoaHoc' Component={ChiTiet} />
           <UserTemplate exact path='/thongTinTaiKhoan' />
-          <LoginTemplate exact path='/dangNhap' Component={Login} />
-          <LoginTemplate exact path='/dangKy' Component={Register} />
+          <LoginTemplate exact path='/dangNhap' Component={LoginPage} />
+          <LoginTemplate exact path='/dangKy' Component={RegisterPage} />
           <AdminTemplate
             exact
             path='/admin/quanLyNguoiDung'
             Component={ManageUserPage}
           />
           <AdminTemplate exact path='/admin' Component={NotFound} />
-          <HomeTemplate exact path='/' Component={TrangChu} />
+          <HomeTemplate exact path='/' Component={HomePage} />
           <HomeTemplate Component={NotFound} />
         </Switch>
       </BrowserRouter>

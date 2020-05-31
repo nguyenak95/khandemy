@@ -12,7 +12,6 @@ import { GlobalContext } from '../../global';
 import EditUserForm from '../EditUserForm';
 import axios from 'axios';
 import { LAY_THONG_TIN_CA_NHAN } from '../Util';
-import AdminNavbar from '../AdminNavbar';
 const { Content, Sider } = Layout;
 
 const UserProfile = ({ history }) => {
@@ -20,45 +19,44 @@ const UserProfile = ({ history }) => {
     isCollapsed: false,
     isEditProfile: true,
   });
-  const { dispatch, isAuth, userData } = useContext(GlobalContext);
+  const { dispatch, isAuth, userData, reqOptions } = useContext(GlobalContext);
   const { isCollapsed, isEditProfile } = pageStatus;
   const toggleCollapsed = () =>
     setPageStatus((s) => ({ ...s, isCollapsed: !s.isCollapsed }));
-
+  const hideSidebar = () => {
+    !isCollapsed &&
+      setPageStatus((s) => ({
+        ...s,
+        isCollapsed: false,
+      }));
+  };
   const toEditProfile = () =>
     !isEditProfile && setPageStatus((s) => ({ ...s, isEditProfile: true }));
 
   const toEditCourse = () =>
     isEditProfile && setPageStatus((s) => ({ ...s, isEditProfile: false }));
-
+  const toHome = () => history.push('/');
   const handleLogout = () => dispatch({ type: 'logout' });
+  const layThongTinCaNhan = () => {
+    const { taiKhoan } = JSON.parse(
+      localStorage.getItem('tokenKhandemy') || '{}'
+    );
 
-  useEffect(() => {
-    if (isAuth) {
-      const store = localStorage.getItem('tokenKhandemy');
-      const { taiKhoan, accessToken } = JSON.parse(store);
-      axios
-        .post(
-          LAY_THONG_TIN_CA_NHAN,
-          { taiKhoan },
-          {
-            headers: {
-              Authorization: 'Bearer ' + accessToken,
-            },
-          }
-        )
-        .then((r) => {
-          dispatch({ type: 'setUserData', payload: r.data });
-        })
-        .catch(() =>
+    axios
+      .post(LAY_THONG_TIN_CA_NHAN, { taiKhoan }, reqOptions)
+      .then(({ data }) => {
+        dispatch({ type: 'setUserData', payload: data });
+      })
+      .catch(
+        () =>
           notification.error({
             message: 'Token hết hạn, vui lòng đăng nhập lại',
-          })
-        );
-    } else {
-      history.push('/dangNhap');
-    }
-  }, [isAuth, userData]);
+          }) || dispatch({ type: 'logout' })
+      );
+  };
+  useEffect(() => {
+    isAuth ? userData || layThongTinCaNhan() : history.push('/dangNhap');
+  }, [isAuth]);
 
   return isAuth ? (
     <Layout id='user__profile' style={{ minHeight: '100vh' }}>
@@ -68,9 +66,9 @@ const UserProfile = ({ history }) => {
         collapsible
         collapsed={isCollapsed}
         onCollapse={toggleCollapsed}
-        onBreakpoint={toggleCollapsed}>
+        onBreakpoint={hideSidebar}>
         <Menu defaultSelectedKeys={['1']} theme='dark' mode='inline'>
-          <Menu.Item className='pl-2'>
+          <Menu.Item className='pl-2' onClick={toHome}>
             <img
               src={Logo}
               alt='khandemy logo'
@@ -101,7 +99,10 @@ const UserProfile = ({ history }) => {
           {isEditProfile ? (
             <EditUserForm isAuth={isAuth} userData={userData} />
           ) : (
-            <EditCourse dispatch={dispatch} userData={userData} />
+            <EditCourse
+              userData={userData}
+              layThongTinCaNhan={layThongTinCaNhan}
+            />
           )}
         </div>
       </Content>

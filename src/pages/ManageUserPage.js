@@ -1,50 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { Button, PageHeader, Input, notification } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Button, PageHeader, Input, notification, Pagination } from 'antd';
 import { TIM_KIEM_NGUOI_DUNG } from '../components/Util';
 import axios from 'axios';
 import UserList from '../components/UserList';
+import EditUserFormAdmin from '../components/EditUserFormAdmin';
+import RegisterCourseModal from '../components/RegisterCourseModal';
 
 const ManageUserPage = () => {
-  const [isAdd, setIsAdd] = useState(false);
+  const [edit, setEdit] = useState({
+    isEdit: false,
+    dataEdit: {},
+  });
+  const [modalData, setModalData] = useState({
+    isVisible: false,
+    taiKhoan: '',
+  });
   const [userList, setUserList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  useEffect(() => {
+  const { isEdit, dataEdit } = edit;
+  const { isVisible, taiKhoan } = modalData;
+  const closeModal = useCallback(
+    () =>
+      setModalData({
+        isVisible: false,
+        taiKhoan: '',
+      }),
+    []
+  );
+  const openModal = (taiKhoan) =>
+    setModalData({
+      isVisible: true,
+      taiKhoan,
+    });
+  const handleEdit = (user) =>
+    setEdit({
+      isEdit: true,
+      dataEdit: user.taiKhoan ? user : {},
+    });
+  const handleSearch = (e = { target: '' }) => {
     axios
-      .get(TIM_KIEM_NGUOI_DUNG)
+      .get(
+        `${TIM_KIEM_NGUOI_DUNG}${
+          e.target.value ? `&tuKhoa=${e.target.value}` : ''
+        }`
+      )
       .then((r) =>
-        setUserList(r.data.map((item, idx) => ({ ...item, STT: idx + 1 })))
+        setUserList(
+          r.data.map((item, idx) => ({ ...item, STT: idx + 1, key: idx }))
+        )
       )
       .catch((e) =>
         notification.error({
           message: e.message,
         })
       );
-  }, []);
-  const handleAdd = () => setIsAdd(true);
-  const handleInputSearch = ({ target }) => setSearchTerm(target.value);
-  const handleSearch = () => {
-    axios
-      .get(`${TIM_KIEM_NGUOI_DUNG}${searchTerm ? `&tuKhoa=${searchTerm}` : ''}`)
-      .then((r) => console.log(r.data) || setUserList(r.data))
-      .catch((e) =>
-        notification.error({
-          message: e.message,
-        })
-      );
   };
-  return (
+  const handleExitEdit = () =>
+    setEdit({ isEdit: false, dataEdit: {} }) || handleSearch();
+  useEffect(() => handleSearch(), []);
+  return !isEdit ? (
     <>
       <PageHeader
         title='Quản lý người dùng'
-        extra={<Button onClick={handleAdd}>Thêm</Button>}
+        extra={<Button onClick={handleEdit}>Thêm</Button>}
       />
-      <Input.Search
-        onChange={handleInputSearch}
-        placeholder='Nhập vào tài khoản hoặc họ tên người dùng'
+      <div className='d-flex mb-5'>
+        <Input.Search
+          width={200}
+          onChange={handleSearch}
+          placeholder='Nhập vào tài khoản hoặc họ tên người dùng'
+        />
+      </div>
+      <UserList
+        openModal={openModal}
+        handleEdit={handleEdit}
+        dataSource={userList}
+        handleSearch={handleSearch}
+        loading={false}
       />
-      <Button onClick={handleSearch}>Tìm</Button>
-      <UserList dataSource={userList} loading={false} />
+      <RegisterCourseModal
+        closeModal={closeModal}
+        visible={isVisible}
+        taiKhoan={taiKhoan}
+      />
     </>
+  ) : (
+    <EditUserFormAdmin userData={dataEdit} handleExitEdit={handleExitEdit} />
   );
 };
 
