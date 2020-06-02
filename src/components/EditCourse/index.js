@@ -13,7 +13,7 @@ const EditCourse = ({ userData, layThongTinCaNhan }) => {
   const [mangKhoaHoc, setMangKhoaHoc] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const { taiKhoan, chiTietKhoaHocGhiDanh } = userData;
+  const { taiKhoan, chiTietKhoaHocGhiDanh } = userData || {};
   const mangHienThi =
     mangKhoaHoc.length > 0
       ? mangKhoaHoc.filter(

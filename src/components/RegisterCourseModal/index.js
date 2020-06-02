@@ -11,7 +11,7 @@ import {
   errorBar,
 } from '../Util';
 import { GlobalContext } from '../../global';
-import TableCourse from '../TableCourse';
+import TableCourse from '../ModalTableCourse';
 import './index.scss';
 
 const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {

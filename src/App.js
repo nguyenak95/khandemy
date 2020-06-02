@@ -6,14 +6,15 @@ import { HomeTemplate } from './templates/templateHome';
 import { LoginTemplate } from './templates/templateLogin';
 import { UserTemplate } from './templates/templateUser';
 import { AdminTemplate } from './templates/templateAdmin';
-import DanhMucKhoaHoc from './components/DanhMucKhoaHoc';
-import NotFound from './components/NotFound';
 import ChiTiet from './components/ChiTiet';
 import { rootReducer, GlobalContext } from './global';
 import ManageUserPage from './pages/ManageUserPage';
+import ManageCoursePage from './pages/ManageCoursePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import DanhMucKhoaHoc from './pages/DanhMucKhoaHoc';
 import HomePage from './pages/HomePage';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [globalState, dispatch] = useReducer(rootReducer, {}, () => {
@@ -47,7 +48,12 @@ function App() {
             path='/admin/quanLyNguoiDung'
             Component={ManageUserPage}
           />
-          <AdminTemplate exact path='/admin' Component={NotFound} />
+          <AdminTemplate
+            exact
+            path='/admin/quanLyKhoaHoc'
+            Component={ManageCoursePage}
+          />
+          <AdminTemplate exact path='/admin' Component={ManageUserPage} />
           <HomeTemplate exact path='/' Component={HomePage} />
           <HomeTemplate Component={NotFound} />
         </Switch>

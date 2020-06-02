@@ -4,13 +4,14 @@ import { Img01, Img02, Img03, Img04 } from '../assets/img';
 import { LAY_8_KHOA_MOI, errorBar } from '../components/Util';
 import CourseList from '../components/CourseList';
 import axios from 'axios';
+import './HomePage.scss'
 
-const TrangChu = () => {
+const HomePage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     axios(LAY_8_KHOA_MOI)
-      .then(({ data }) => setItems(data.slice(0,8)))
+      .then(({ data }) => setItems(data.slice(0, 8)))
       .catch(({ response }) => errorBar(response.data));
   }, []);
 
@@ -32,4 +33,4 @@ const TrangChu = () => {
   );
 };
 
-export default React.memo(TrangChu);
+export default HomePage;

@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHistory, } from 'react-router-dom';
+import './index.scss'
 
 function Course({ data, numberStar }) {
   const history = useHistory();

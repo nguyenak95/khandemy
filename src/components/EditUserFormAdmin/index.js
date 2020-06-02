@@ -119,7 +119,9 @@ const EditUserFormAdmin = ({ userData, handleExitEdit }) => {
         })
       );
   };
-  useEffect(() => userData.taiKhoan && form.setFieldsValue(userData));
+  useEffect(
+    () => userData && userData.taiKhoan && form.setFieldsValue(userData)
+  );
   return (
     <>
       <PageHeader

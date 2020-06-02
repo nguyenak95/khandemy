@@ -38,7 +38,7 @@ const EditUserForm = ({ userData }) => {
           const store = localStorage.getItem('tokenKhandemy');
           const { accessToken } = JSON.parse(store);
           const { taiKhoan, email, soDT, hoTen } = values;
-          const { maNhom, maLoaiNguoiDung } = userData;
+          const { maNhom, maLoaiNguoiDung } = userData || {};
           axios
             .put(
               CAP_NHAT_THONG_TIN,

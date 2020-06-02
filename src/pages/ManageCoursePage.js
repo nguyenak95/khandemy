@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button, PageHeader, Input, notification, Pagination } from 'antd';
-import { TIM_KIEM_NGUOI_DUNG } from '../components/Util';
+import { TIM_KIEM_KHOA_HOC } from '../components/Util';
 import axios from 'axios';
-import UserTable from '../components/UserTable';
+import CourseTable from '../components/CourseTable';
 import EditUserFormAdmin from '../components/EditUserFormAdmin';
 import RegisterCourseModal from '../components/RegisterCourseModal';
 
-const ManageUserPage = () => {
+const ManageCoursePage = () => {
   const [edit, setEdit] = useState({
     isEdit: false,
     dataEdit: {},
@@ -15,7 +15,8 @@ const ManageUserPage = () => {
     isVisible: false,
     taiKhoan: '',
   });
-  const [userList, setUserList] = useState([]);
+  const [courseList, setCourseList] = useState([]);
+
   const { isEdit, dataEdit } = edit;
   const { isVisible, taiKhoan } = modalData;
   const closeModal = useCallback(
@@ -39,12 +40,12 @@ const ManageUserPage = () => {
   const handleSearch = (e = { target: '' }) => {
     axios
       .get(
-        `${TIM_KIEM_NGUOI_DUNG}${
+        `${TIM_KIEM_KHOA_HOC}${
           e.target.value ? `&tuKhoa=${e.target.value}` : ''
         }`
       )
       .then((r) =>
-        setUserList(
+        setCourseList(
           r.data.map((item, idx) => ({ ...item, STT: idx + 1, key: idx }))
         )
       )
@@ -60,20 +61,20 @@ const ManageUserPage = () => {
   return !isEdit ? (
     <>
       <PageHeader
-        title='Quản lý người dùng'
+        title='Quản lý khóa học'
         extra={<Button onClick={handleEdit}>Thêm</Button>}
       />
       <div className='d-flex mb-5'>
         <Input.Search
           width={200}
           onChange={handleSearch}
-          placeholder='Nhập vào tài khoản hoặc họ tên người dùng'
+          placeholder='Nhập vào khóa học'
         />
       </div>
-      <UserTable
+      <CourseTable
         openModal={openModal}
         handleEdit={handleEdit}
-        dataSource={userList}
+        dataSource={courseList}
         handleSearch={handleSearch}
         loading={false}
       />
@@ -88,4 +89,4 @@ const ManageUserPage = () => {
   );
 };
 
-export default ManageUserPage;
+export default ManageCoursePage;

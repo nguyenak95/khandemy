@@ -1,0 +1,35 @@
+
+div.card {
+  height: 478px;
+  .card-body {
+    border-top: 0.5px solid rgb(156, 154, 154);
+  }
+  .fa-star {
+    font-size: 30px;
+  }
+  .yellow {
+    color: #d8d812;
+  }
+  .registerCourse__btn {
+    background: #a79e43;
+    border: none;
+    color: white;
+  }
+  .registerCourse__btn:hover {
+    font-weight: bolder;
+    color: #a79e43;
+    background: white;
+    border: 3px solid #a79e43;
+  }
+}
+div.card:hover {
+  background: linear-gradient(to right, #3ca55c, #b5ac49);
+  color: white;
+  .card-title {
+    font-weight: bold;
+  }
+  transition: all linear 0.5s;
+  border: none;
+  border-top: 6px solid #035a31;
+  transform: translateY(-20px);
+}

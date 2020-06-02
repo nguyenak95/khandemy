@@ -16,26 +16,20 @@ body {
     background: lightblue;
   }
 }
+
 .linearColor {
   background: linear-gradient(to right, #3ca55c, #b5ac49);
 }
-p.notfound {
-  padding-top: 100px;
-  font-size: 60px;
-  background: linear-gradient(to right, #3ca55c, #b5ac49);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 
-  text-align: center;
-}
-#course__category {
-  padding-top: 100px;
-}
 .font__dancing {
   font-family: 'Dancing Script', cursive;
 }
-
+thead.ant-table-thead th.ant-table-cell {
+  font-weight: 700;
+}
+ul {
+  list-style: none;
+}
 h1 {
   font-size: 4rem;
   background: linear-gradient(to right, #3ca55c, #b5ac49);
@@ -44,77 +38,8 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-//Course
-div.card {
-  .card-body {
-    border-top: 0.5px solid rgb(156, 154, 154);
-  }
-  height: 478px;
-}
-div.card:hover {
-  background: linear-gradient(to right, #3ca55c, #b5ac49);
-  color: white;
-  .card-title {
-    font-weight: bold;
-  }
-  transition: all linear 0.5s;
-  border: none;
-  border-top: 6px solid #035a31;
-  transform: translateY(-20px);
-}
-//Card
-.fa-star {
-  font-size: 30px;
-}
-.yellow {
-  color: #d8d812;
-}
-.registerCourse__btn {
-  background: #a79e43;
-  border: none;
-  color: white;
-}
-.registerCourse__btn:hover {
-  font-weight: bolder;
-  color: #a79e43;
-  background: white;
-  border: 3px solid #a79e43;
-}
-.page__btn {
-  border: 1px solid #a79e43;
-  color: #a79e43;
-}
-.page__btn:hover {
-  background: #a79e43;
-  color: white;
-}
-.slt__page__btn {
-  background: #a79e43;
-  color: white;
-}
-.nav__page__btn {
-  background: #a79e43;
-  color: white;
-}
-
-// HomePage
-// Carousel
-.carousel__img {
-  height: 80vh;
-}
-// Carousel
-// background: linear-gradient(to right, #e65245, #ff1e );
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 3rem;
-  }
-}
-
-ul {
-  list-style: none;
-}
-@media screen and (max-width: 450px) {
-  .carousel__img {
-    height: 300px;
   }
 }

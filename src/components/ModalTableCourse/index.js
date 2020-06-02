@@ -11,7 +11,6 @@ const TableCourse = ({
     isWaitingTable ? 'Khóa học chờ xác thực' : 'Khóa học đã ghi danh';
   const pagination = {
     pageSize: 2,
-    position: ['topRight', 'none'],
   };
   const columns = [
     {

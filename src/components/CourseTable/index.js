@@ -1,10 +1,9 @@
 import React from 'react';
 import { Table, Button, notification } from 'antd';
-import './index.scss';
 import { XOA_NGUOI_DUNG } from '../Util';
 import axios from 'axios';
 
-const UserList = ({
+const CourseTable = ({
   loading,
   dataSource,
   handleSearch,
@@ -46,48 +45,44 @@ const UserList = ({
       fixed: 'left',
     },
     {
-      title: 'Tài khoản',
-      dataIndex: 'taiKhoan',
-      key: 'taiKhoan',
+      title: 'Mã khóa học',
+      dataIndex: 'maKhoaHoc',
+      key: 'maKhoaHoc',
       width: 60,
       fixed: 'left',
     },
     {
-      title: 'Mật khẩu',
-      dataIndex: 'matKhau',
+      title: 'Tên khóa học',
+      dataIndex: 'tenKhoaHoc',
+      key: 'tenKhoaHoc',
       ellipsis: 'enable',
-      key: 'matKhau',
+      width: 120,
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'hinhAnh',
+      key: 'hinhAnh',
       width: 60,
-      render: (matKhau, i) => (
-        <input
-          key={i}
-          disabled
-          type='password'
-          defaultValue={matKhau}
-          className='border-0'
-        />
+      render: (data) => (
+        <a href={data} target='_blank' rel='noopener noreferrer'>
+          {data}
+        </a>
       ),
-    },
-    {
-      title: 'Họ tên',
-      dataIndex: 'hoTen',
-      key: 'hoTen',
-      width: 80,
       ellipsis: 'enable',
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: 'Lượt xem',
+      dataIndex: 'luotXem',
+      key: 'luotXem',
+      width: 40,
+    },
+    {
+      title: 'Người tạo',
+      dataIndex: 'nguoiTao',
+      key: 'nguoiTao',
       width: 100,
       ellipsis: 'enable',
-    },
-    {
-      title: 'Số điện thoại',
-      dataIndex: 'soDt',
-      key: 'soDt',
-      width: 50,
-      ellipsis: 'enable',
+      render: (data) => data.hoTen,
     },
     {
       title: 'Thao tác',
@@ -119,7 +114,7 @@ const UserList = ({
     <Table
       id='user__list'
       bordered
-      scroll={{ x: '100vw', y: 400 }}
+      scroll={{ x: '100vw' }}
       columns={columns}
       dataSource={dataSource}
       loading={loading}
@@ -129,4 +124,4 @@ const UserList = ({
   );
 };
 
-export default UserList;
+export default CourseTable;

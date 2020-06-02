@@ -77,8 +77,10 @@ const Navbar = ({ history }) => {
       <div
         className='collapse justify-content-between navbar-collapse'
         id='navbarSupportedContent'>
-        <DropDown danhMucKhoaHoc={danhMucKhoaHoc} />
-        <SearchBar />
+        <div className='d-flex flex-row'>
+          <DropDown danhMucKhoaHoc={danhMucKhoaHoc} />
+          <SearchBar />
+        </div>
 
         {isAuth ? (
           <div className='dropdown'>

@@ -1,4 +1,6 @@
 import { notification } from 'antd';
+export const TIM_KIEM_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP08&&tenKhoaHoc=';
 
 export const LAY_DANH_MUC_KHOA_HOC =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhMucKhoaHoc';
