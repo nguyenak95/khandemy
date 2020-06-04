@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Modal, Form, Select, Button } from 'antd';
+import { Modal, Form, Select } from 'antd';
 import axios from 'axios';
 import {
   POST_ADMIN_GHI_DANH_KHOA_HOC,
@@ -11,10 +11,10 @@ import {
   errorBar,
 } from '../Util';
 import { GlobalContext } from '../../global';
-import TableCourse from '../ModalTableCourse';
+import ModalTableCourse from '../ModalTableCourse';
 import './index.scss';
 
-const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
+const RegisterCourseByUserModal = ({ taiKhoan, visible, closeModal }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState({
     chuaGhiDanh: [],
@@ -29,7 +29,7 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
       .post(
         POST_HUY_DANG_KY,
         {
-          taiKhoan,
+          taiKhoan: taiKhoan || '',
           maKhoaHoc,
         },
         reqOptions
@@ -42,21 +42,21 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
       axios.post(
         POST_KHOA_HOC_CHUA_GHI_DANH,
         {
-          TaiKhoan: taiKhoan,
+          TaiKhoan: taiKhoan || '',
         },
         reqOptions
       ),
       axios.post(
         POST_KHOA_HOC_DA_GHI_DANH,
         {
-          TaiKhoan: taiKhoan,
+          TaiKhoan: taiKhoan || '',
         },
         reqOptions
       ),
       axios.post(
         POST_KHOA_HOC_CHO_XET_DUYET,
         {
-          TaiKhoan: taiKhoan,
+          TaiKhoan: taiKhoan || '',
         },
         reqOptions
       ),
@@ -71,7 +71,6 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
           const dataChuaGhiDanh = khoaHocChuaGhiDanh.filter(
             (it) => !dataDaGhiDanh.includes(it.maKhoaHoc)
           );
-          resetFields();
           setData({
             chuaGhiDanh: dataChuaGhiDanh.map((it, idx) => ({
               ...it,
@@ -95,7 +94,7 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
       .post(
         POST_ADMIN_GHI_DANH_KHOA_HOC,
         {
-          taiKhoan,
+          taiKhoan: taiKhoan || '',
           maKhoaHoc,
         },
         reqOptions
@@ -144,14 +143,14 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
             </button>
           </Form.Item>
         </Form.Item>
-        <TableCourse
+        <ModalTableCourse
           getFieldValue={getFieldValue}
           verifyCourse={handleRegister}
           deleteCourse={deleteCourse}
           dataSource={choXetDuyet}
           isWaitingTable
         />
-        <TableCourse
+        <ModalTableCourse
           getFieldValue={getFieldValue}
           deleteCourse={deleteCourse}
           dataSource={daGhiDanh}
@@ -161,4 +160,4 @@ const RegisterCourseModal = ({ taiKhoan, visible, closeModal }) => {
   );
 };
 
-export default React.memo(RegisterCourseModal);
+export default React.memo(RegisterCourseByUserModal);

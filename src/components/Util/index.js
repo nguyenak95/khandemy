@@ -44,6 +44,15 @@ export const POST_ADMIN_GHI_DANH_KHOA_HOC =
 export const POST_HUY_DANG_KY =
   'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/HuyGhiDanh';
 
+export const POST_XOA_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?maKhoaHoc=';
+export const POST_NGUOI_DUNG_CHUA_GHI_DANH =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh';
+export const POST_DANH_SACH_HV_CHO_XET_DUYET =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet';
+export const POST_DANH_SACH_HOC_VIEN_KHOA_HOC =
+  'http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc';
+
 export const generateRandomStar = () => Math.ceil(Math.random() * 5);
 
 export const successBar = (mess) =>

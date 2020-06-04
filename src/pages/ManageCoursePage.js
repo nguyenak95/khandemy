@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, PageHeader, Input, notification, Pagination } from 'antd';
-import { TIM_KIEM_KHOA_HOC } from '../components/Util';
+import { Button, PageHeader, Input } from 'antd';
+import { TIM_KIEM_KHOA_HOC, errorBar } from '../components/Util';
 import axios from 'axios';
 import CourseTable from '../components/CourseTable';
-import EditUserFormAdmin from '../components/EditUserFormAdmin';
-import RegisterCourseModal from '../components/RegisterCourseModal';
+import EditCourseFormAdmin from '../components/EditCourseFormAdmin';
+import RegisterCourseByCourseModal from '../components/RegisterCourseByCourseModal';
 
 const ManageCoursePage = () => {
   const [edit, setEdit] = useState({
@@ -13,7 +13,7 @@ const ManageCoursePage = () => {
   });
   const [modalData, setModalData] = useState({
     isVisible: false,
-    taiKhoan: '',
+    maKhoaHoc: '',
   });
   const [courseList, setCourseList] = useState([]);
 
@@ -23,19 +23,19 @@ const ManageCoursePage = () => {
     () =>
       setModalData({
         isVisible: false,
-        taiKhoan: '',
+        maKhoaHoc: '',
       }),
     []
   );
-  const openModal = (taiKhoan) =>
+  const openModal = (maKhoaHoc) =>
     setModalData({
       isVisible: true,
-      taiKhoan,
+      maKhoaHoc,
     });
-  const handleEdit = (user) =>
+  const handleEdit = (khoaHoc) =>
     setEdit({
       isEdit: true,
-      dataEdit: user.taiKhoan ? user : {},
+      dataEdit: khoaHoc.maKhoaHoc ? khoaHoc : {},
     });
   const handleSearch = (e = { target: '' }) => {
     axios
@@ -50,7 +50,7 @@ const ManageCoursePage = () => {
         )
       )
       .catch((e) =>
-        notification.error({
+        errorBar({
           message: e.message,
         })
       );
@@ -78,14 +78,14 @@ const ManageCoursePage = () => {
         handleSearch={handleSearch}
         loading={false}
       />
-      <RegisterCourseModal
+      <RegisterCourseByCourseModal
         closeModal={closeModal}
         visible={isVisible}
         taiKhoan={taiKhoan}
       />
     </>
   ) : (
-    <EditUserFormAdmin userData={dataEdit} handleExitEdit={handleExitEdit} />
+    <EditCourseFormAdmin courseData={dataEdit} handleExitEdit={handleExitEdit} />
   );
 };
 

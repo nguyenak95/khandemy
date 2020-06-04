@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, Button, notification } from 'antd';
-import { XOA_NGUOI_DUNG } from '../Util';
+import { Table, Button } from 'antd';
+import { POST_XOA_KHOA_HOC, errorBar, successBar } from '../Util';
 import axios from 'axios';
 
 const CourseTable = ({
@@ -16,26 +16,18 @@ const CourseTable = ({
   const { accessToken } = JSON.parse(
     localStorage.getItem('tokenKhandemy') || '{}'
   );
-  const handleDeleteUser = (taiKhoan) =>
+  const handleDeleteCourse = (maKhoaHoc) =>
     axios
-      .delete(`${XOA_NGUOI_DUNG}${taiKhoan}`, {
+      .delete(`${POST_XOA_KHOA_HOC}${maKhoaHoc}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
       })
       .then(
-        (r) =>
-          notification.success({
-            message: `Xóa người dùng ${taiKhoan} thành công`,
-            placement: 'bottomRight',
-          }) || handleSearch()
+        () =>
+          successBar(`Xóa khóa học ${maKhoaHoc} thành công`) || handleSearch()
       )
-      .catch((e) =>
-        notification.error({
-          message: e.response.data,
-          placement: 'bottomRight',
-        })
-      );
+      .catch((e) => errorBar(e.response.data));
   const columns = [
     {
       title: 'STT',
@@ -93,7 +85,7 @@ const CourseTable = ({
         <Button.Group>
           <button
             className='btn btn-sm btn-dark mr-1'
-            onClick={() => openModal(a.taiKhoan)}>
+            onClick={() => openModal(a.maKhoaHoc)}>
             Ghi danh
           </button>
           <button
@@ -102,7 +94,7 @@ const CourseTable = ({
             Sửa
           </button>
           <button
-            onClick={() => handleDeleteUser(a.taiKhoan)}
+            onClick={() => handleDeleteCourse(a.maKhoaHoc)}
             className='btn btn-sm btn-danger mr-1'>
             X
           </button>
@@ -112,7 +104,7 @@ const CourseTable = ({
   ];
   return (
     <Table
-      id='user__list'
+      id='course__list'
       bordered
       scroll={{ x: '100vw' }}
       columns={columns}

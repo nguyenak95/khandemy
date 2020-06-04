@@ -4,7 +4,7 @@ import { TIM_KIEM_NGUOI_DUNG } from '../components/Util';
 import axios from 'axios';
 import UserTable from '../components/UserTable';
 import EditUserFormAdmin from '../components/EditUserFormAdmin';
-import RegisterCourseModal from '../components/RegisterCourseModal';
+import RegisterCourseByUserModal from '../components/RegisterCourseByUserModal';
 
 const ManageUserPage = () => {
   const [edit, setEdit] = useState({
@@ -77,7 +77,7 @@ const ManageUserPage = () => {
         handleSearch={handleSearch}
         loading={false}
       />
-      <RegisterCourseModal
+      <RegisterCourseByUserModal
         closeModal={closeModal}
         visible={isVisible}
         taiKhoan={taiKhoan}

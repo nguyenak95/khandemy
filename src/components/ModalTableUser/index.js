@@ -1,14 +1,14 @@
 import React from 'react';
 import { Table, Button } from 'antd';
 
-const ModalTableCourse = ({
+const ModalTableUser = ({
   dataSource,
-  deleteCourse,
-  verifyCourse,
+  deleteUser,
+  verifyUser,
   isWaitingTable = false,
 }) => {
   const title = () =>
-    isWaitingTable ? 'Khóa học chờ xác thực' : 'Khóa học đã ghi danh';
+    isWaitingTable ? 'Người dùng chờ xác thực' : 'Người dùng đã ghi danh';
   const pagination = {
     pageSize: 2,
   };
@@ -20,9 +20,9 @@ const ModalTableCourse = ({
       width: 20,
     },
     {
-      title: 'Tên Khóa học',
-      dataIndex: 'tenKhoaHoc',
-      key: 'tenKhoaHoc',
+      title: 'Tên người dùng',
+      dataIndex: 'hoTen',
+      key: 'hoTen',
       width: 60,
     },
     {
@@ -34,12 +34,12 @@ const ModalTableCourse = ({
           {isWaitingTable ? (
             <button
               className='btn btn-dark mr-1'
-              onClick={() => verifyCourse(a.maKhoaHoc)}>
+              onClick={() => verifyUser(a.taiKhoan)}>
               Xác thực
             </button>
           ) : null}
           <button
-            onClick={() => deleteCourse(a.maKhoaHoc)}
+            onClick={() => deleteUser(a.taiKhoan)}
             className='btn btn-danger mr-1'>
             Hủy
           </button>
@@ -59,4 +59,4 @@ const ModalTableCourse = ({
   );
 };
 
-export default ModalTableCourse;
+export default ModalTableUser;
