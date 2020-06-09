@@ -82,8 +82,9 @@ const EditUserFormAdmin = ({ courseData, handleExitEdit }) => {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('tenKhoaHoc', r.data.tenKhoaHoc);
-            successBar('Thêm khóa học thành công') || resetFields()
-            handleExitEdit()
+            successBar('Thêm khóa học thành công') || resetFields();
+            setFile(null);
+            handleExitEdit();
             axios
               .post(UPLOAD_HINH, formData, reqOptions)
               .then((r) => successBar(r.data))
@@ -129,9 +130,8 @@ const EditUserFormAdmin = ({ courseData, handleExitEdit }) => {
             tenKhoaHoc,
             maDanhMucKhoaHoc,
             ngayTao,
-            danhGia,
             taiKhoanNguoiTao,
-            hinhAnh,
+            moTa,
           } = values;
           axios
             .put(
@@ -140,22 +140,30 @@ const EditUserFormAdmin = ({ courseData, handleExitEdit }) => {
                 maKhoaHoc,
                 tenKhoaHoc,
                 maDanhMucKhoaHoc,
-                luotXem: luotXem || courseData.luotXem,
-                // danhGia:,
                 taiKhoanNguoiTao,
-                hinhAnh,
                 moTa,
+                hinhAnh: file ? file?.name : courseData.hinhAnh,
+                luotXem: luotXem || courseData.luotXem,
                 biDanh: tenKhoaHoc.toLowerCase().split(' ').join('-'),
                 maNhom: 'GP08',
                 ngayTao: moment(ngayTao).format('DD/MM/YYYY'),
               },
               reqOptions
             )
-            .then(
-              (r) =>
-                successBar('Chỉnh sửa thông tin khóa học thành công') ||
-                setFieldsValue(r.data)
-            )
+            .then((r) => {
+              if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('tenKhoaHoc', r.data.tenKhoaHoc);
+                axios
+                  .post(UPLOAD_HINH, formData, reqOptions)
+                  .then((r) => successBar(r.data))
+                  .catch((e) => errorBar(e.response?.data || e));
+                setFile(null);
+              }
+              successBar('Chỉnh sửa thông tin khóa học thành công')
+              handleExitEdit()
+            })
             .catch(({ response }) => errorBar(response.data));
         }
       })
@@ -223,10 +231,10 @@ const EditUserFormAdmin = ({ courseData, handleExitEdit }) => {
           </Col>
           <Col sm={24} md={10}>
             <Form.Item label='Đánh giá' name='danhGia'>
-              <Input type='number' disabled={!!courseData} />
+              <Input type='number' disabled={!courseData.maKhoaHoc} />
             </Form.Item>
             <Form.Item label='Lượt xem' name='luotXem'>
-              <Input type='number' disabled={!!courseData} />
+              <Input type='number' disabled={!courseData.maKhoaHoc} />
             </Form.Item>
             <Form.Item
               label='Người tạo'
