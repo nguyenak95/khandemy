@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   notification,
-  Spin,
 } from 'antd';
 import { CAP_NHAT_THONG_TIN } from '../Util';
 import axios from 'axios';

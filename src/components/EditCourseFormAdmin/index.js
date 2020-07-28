@@ -34,7 +34,7 @@ const EditUserFormAdmin = ({ courseData, handleExitEdit }) => {
   const [file, setFile] = useState(null);
   const { listMaDanhMuc, listGV, moTa } = data;
   const { reqOptions } = useContext(GlobalContext);
-  const { setFields, validateFields, setFieldsValue, resetFields } = form;
+  const { setFields, validateFields, resetFields } = form;
   useEffect(() => {
     axios
       .all([axios.get(LAY_DANH_MUC_KHOA_HOC), axios.get(TIM_KIEM_NGUOI_DUNG)])

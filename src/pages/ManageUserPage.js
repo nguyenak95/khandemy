@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, PageHeader, Input, notification, Pagination } from 'antd';
+import { Button, PageHeader, Input, notification } from 'antd';
 import { TIM_KIEM_NGUOI_DUNG } from '../components/Util';
 import axios from 'axios';
 import UserTable from '../components/UserTable';

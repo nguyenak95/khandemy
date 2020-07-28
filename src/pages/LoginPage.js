@@ -1,7 +1,6 @@
 import React from 'react';
 import './LoginPage.scss';
 import LoginForm from '../components/LoginForm';
-import Axios from 'axios';
 
 const LoginPage = (props) => {
   return (

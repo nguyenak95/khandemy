@@ -5,10 +5,6 @@ import { Layout, Menu } from 'antd';
 import { UsergroupAddOutlined, BookOutlined } from '@ant-design/icons';
 const { Sider, Content } = Layout;
 
-const style = {
-  fontWeight: 700
-}
-
 const AdminLayout = ({ history, children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const toggleCollapsed = useCallback(() => setIsCollapsed((s) => !s), []);
